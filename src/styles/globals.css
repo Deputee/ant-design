@@ -135,7 +135,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, #00000052 0%, #01353C 150%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -408,4 +408,9 @@ body {
 /* Ensure the modal maintains proper structure */
 .modal-header, .modal-footer {
   flex-shrink: 0;
+}
+
+/* Ant Design Modal Wrap Background Override */
+.ant-modal-wrap {
+  background: linear-gradient(180deg, #00000052 0%, #01353C 150%) !important;
 }

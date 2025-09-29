@@ -1,25 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Card, Row, Col, Typography, Button, Space, Avatar, Badge, Tag, Progress,
-  Tooltip, Switch, Slider, Rate, Input, Select, DatePicker, TimePicker,
-  Segmented, Checkbox, Radio, Divider, Image, Spin, Empty, Result,
-  Skeleton, BackTop, Watermark, QRCode, Tour, ColorPicker, Flex
-} from 'antd';
+  Tooltip, Switch, Slider, Rate, Input, Select, DatePicker, Modal,
+  Segmented, Divider, Spin, Empty, 
+  Skeleton, FloatButton, Watermark, QRCode, ColorPicker} from 'antd';
 import {
-  UserOutlined, HeartFilled, StarFilled, LikeFilled, ShareAltOutlined,
-  MoreOutlined, BellOutlined, SearchOutlined, FilterOutlined, PlusOutlined,
-  DownloadOutlined, UploadOutlined, EyeOutlined, EditOutlined, DeleteOutlined,
-  SettingOutlined, HomeOutlined, TeamOutlined, ShoppingCartOutlined,
+  
+  MoreOutlined, SearchOutlined, 
+  EyeOutlined, EditOutlined, 
+  HomeOutlined, TeamOutlined, ShoppingCartOutlined,
   TrophyOutlined, RocketOutlined, BulbOutlined, CrownOutlined, GiftOutlined,
-  ThunderboltOutlined, FireOutlined, SafetyOutlined, CameraOutlined,
-  VideoCameraOutlined, MusicOutlined, FileTextOutlined, MailOutlined,
-  PhoneOutlined, EnvironmentOutlined, GlobalOutlined, LinkOutlined,
-  LockOutlined, UnlockOutlined, KeyOutlined, WifiOutlined, BluetoothOutlined,
-  UsbOutlined, PrinterOutlined, ScanOutlined, RadarChartOutlined,
-  PieChartOutlined, BarChartOutlined, LineChartOutlined, DotChartOutlined
-} from '@ant-design/icons';
+  ThunderboltOutlined, FireOutlined, SafetyOutlined, 
+  MailOutlined,
+  PhoneOutlined, GlobalOutlined, 
+  WifiOutlined, 
+  RadarChartOutlined,
+  PieChartOutlined, BarChartOutlined} from '@ant-design/icons';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -56,6 +54,22 @@ export default function AdvancedComponentsPage() {
   const [selectedSegment, setSelectedSegment] = useState('overview');
   const [selectedUsers, setSelectedUsers] = useState(['sarah', 'mike']);
   const [themeMode, setThemeMode] = useState(false);
+  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
+  const [isAntModalOpen, setIsAntModalOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const openCustomModal = () => setIsCustomModalOpen(true);
+  const closeCustomModal = () => setIsCustomModalOpen(false);
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeCustomModal();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -106,7 +120,7 @@ export default function AdvancedComponentsPage() {
                     <Text type="secondary" className="text-sm">{metric.title}</Text>
                     <div className="flex items-center gap-2 mt-1">
                       <Title level={3} className="mb-0">{metric.value}</Title>
-                      <Tag color={metric.trend === 'up' ? 'green' : 'red'} className="text-xs">
+                      <Tag color={metric.trend === 'up' ? 'green' : 'red'} className="text-xs rounded-full">
                         {metric.change}
                       </Tag>
                     </div>
@@ -372,6 +386,226 @@ export default function AdvancedComponentsPage() {
           </Row>
         </Card>
 
+        {/* Modal & Popup Components */}
+        <Card className="mb-8 shadow-lg border-0" title="Modal & Popup Components">
+          <Row gutter={[24, 24]}>
+            <Col xs={24} md={12}>
+              <Card className="shadow-sm">
+                <Title level={4} className="mb-4">Ant Design Modal</Title>
+                <Text className="block mb-4">
+                  Built-in modal component with customizable features and responsive design.
+                </Text>
+                <Space wrap>
+                  <Button type="primary" onClick={() => setIsAntModalOpen(true)}>
+                    Open Basic Modal
+                  </Button>
+                  <Button onClick={() => setIsAntModalOpen(true)}>
+                    Show Info
+                  </Button>
+                </Space>
+                <div className="mt-4">
+                  <Text type="secondary" className="text-sm">Features:</Text>
+                  <div className="mt-2">
+                    <Space wrap>
+                      <Tag color="blue" className="rounded-full">Responsive</Tag>
+                      <Tag color="green" className="rounded-full">Accessible</Tag>
+                      <Tag color="purple" className="rounded-full">Customizable</Tag>
+                      <Tag color="orange" className="rounded-full">Animated</Tag>
+                    </Space>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Card className="shadow-sm">
+                <Title level={4} className="mb-4">Custom Modal</Title>
+                <Text className="block mb-4">
+                  Custom-designed modal with advanced layout and scrollable content areas.
+                </Text>
+                <Space wrap>
+                  <Button type="primary" onClick={openCustomModal}>
+                    Open Custom Modal
+                  </Button>
+                  <Button type="dashed">
+                    Advanced Options
+                  </Button>
+                </Space>
+                <div className="mt-4">
+                  <Text type="secondary" className="text-sm">Features:</Text>
+                  <div className="mt-2">
+                    <Space wrap>
+                      <Tag color="cyan" className="rounded-full">Multi-section</Tag>
+                      <Tag color="red" className="rounded-full">Scrollable</Tag>
+                      <Tag color="yellow" className="rounded-full">Professional</Tag>
+                      <Tag color="lime" className="rounded-full">Form Ready</Tag>
+                    </Space>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+
+            <Col span={24}>
+              <Card className="shadow-sm" title="Modal Usage Examples">
+                <Row gutter={[16, 16]}>
+                  <Col xs={24} sm={8}>
+                    <div className="text-center p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="text-3xl mb-3">📝</div>
+                      <Title level={5}>Form Modal</Title>
+                      <Text type="secondary">Data entry and form submissions</Text>
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={8}>
+                    <div className="text-center p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="text-3xl mb-3">ℹ️</div>
+                      <Title level={5}>Info Modal</Title>
+                      <Text type="secondary">Display detailed information</Text>
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={8}>
+                    <div className="text-center p-6 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <div className="text-3xl mb-3">⚠️</div>
+                      <Title level={5}>Confirm Modal</Title>
+                      <Text type="secondary">Action confirmations</Text>
+                    </div>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+        </Card>
+
+        {/* Include Model Section */}
+        <Card className="mb-8 shadow-lg border-0" title="Include Model">
+          <Row gutter={[24, 24]}>
+            <Col xs={24} md={12}>
+              <Card className="shadow-sm bg-gradient-to-br from-indigo-50 to-blue-50">
+                <div className="text-center p-6">
+                  <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <BulbOutlined className="text-3xl text-white" />
+                  </div>
+                  <Title level={3} className="mb-3">AI Model Integration</Title>
+                  <Text className="text-gray-600 block mb-4">
+                    Seamlessly integrate AI models into your applications with our advanced API framework.
+                  </Text>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      <Text>Real-time Processing</Text>
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <Text>Multi-Model Support</Text>
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                      <Text>Auto-scaling</Text>
+                    </div>
+                  </div>
+                  <Button type="primary" size="large" icon={<RocketOutlined />}>
+                    Include Model
+                  </Button>
+                </div>
+              </Card>
+            </Col>
+
+            <Col xs={24} md={12}>
+              <Card className="shadow-sm">
+                <Title level={4} className="mb-4">Model Configuration</Title>
+                <Space direction="vertical" className="w-full">
+                  <div>
+                    <Text strong>Model Type:</Text>
+                    <div className="mt-2">
+                      <Select defaultValue="gpt-4" className="w-full">
+                        <Option value="gpt-4">GPT-4 Turbo</Option>
+                        <Option value="gpt-3.5">GPT-3.5 Turbo</Option>
+                        <Option value="claude">Claude 3</Option>
+                        <Option value="gemini">Gemini Pro</Option>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Text strong>Performance Level:</Text>
+                    <div className="mt-2">
+                      <Slider
+                        marks={{
+                          0: 'Basic',
+                          50: 'Standard',
+                          100: 'Premium'
+                        }}
+                        defaultValue={75}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Text strong>Features:</Text>
+                    <div className="mt-2">
+                      <Space wrap>
+                        <Tag color="blue" className="rounded-full">Text Generation</Tag>
+                        <Tag color="green" className="rounded-full">Image Analysis</Tag>
+                        <Tag color="purple" className="rounded-full">Code Review</Tag>
+                        <Tag color="orange" className="rounded-full">Data Processing</Tag>
+                      </Space>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Text strong>API Endpoint:</Text>
+                    <div className="mt-2">
+                      <Input
+                        value="https://api.yourservice.com/v1/models"
+                        readOnly
+                        suffix={
+                          <Tooltip title="Copy to clipboard">
+                            <Button type="text" size="small" icon={<CrownOutlined />} />
+                          </Tooltip>
+                        }
+                      />
+                    </div>
+                  </div>
+                </Space>
+              </Card>
+            </Col>
+
+            <Col span={24}>
+              <Card className="shadow-sm" title="Model Performance Metrics">
+                <Row gutter={[16, 16]}>
+                  <Col xs={24} sm={6}>
+                    <div className="text-center p-4 border border-gray-200 rounded-lg">
+                      <div className="text-2xl font-bold text-green-600 mb-1">99.2%</div>
+                      <div className="text-sm text-gray-500">Accuracy</div>
+                      <Progress percent={99} strokeColor="#52c41a" showInfo={false} size="small" className="mt-2" />
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={6}>
+                    <div className="text-center p-4 border border-gray-200 rounded-lg">
+                      <div className="text-2xl font-bold text-blue-600 mb-1">45ms</div>
+                      <div className="text-sm text-gray-500">Response Time</div>
+                      <Progress percent={85} strokeColor="#1890ff" showInfo={false} size="small" className="mt-2" />
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={6}>
+                    <div className="text-center p-4 border border-gray-200 rounded-lg">
+                      <div className="text-2xl font-bold text-purple-600 mb-1">1.2M</div>
+                      <div className="text-sm text-gray-500">Requests/Day</div>
+                      <Progress percent={75} strokeColor="#722ed1" showInfo={false} size="small" className="mt-2" />
+                    </div>
+                  </Col>
+                  <Col xs={24} sm={6}>
+                    <div className="text-center p-4 border border-gray-200 rounded-lg">
+                      <div className="text-2xl font-bold text-orange-600 mb-1">98.7%</div>
+                      <div className="text-sm text-gray-500">Uptime</div>
+                      <Progress percent={98} strokeColor="#fa8c16" showInfo={false} size="small" className="mt-2" />
+                    </div>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+        </Card>
+
         {/* Modern Icon Grid */}
         <Card className="mb-8 shadow-lg border-0" title="Icon Library">
           <Row gutter={[16, 16]}>
@@ -402,7 +636,186 @@ export default function AdvancedComponentsPage() {
         </Card>
 
         {/* Back to Top */}
-        <BackTop />
+        <FloatButton.BackTop />
+
+        {/* Ant Design Modal */}
+        <Modal
+          title="Advanced Modal Example"
+          open={isAntModalOpen}
+          onOk={() => setIsAntModalOpen(false)}
+          onCancel={() => setIsAntModalOpen(false)}
+          width={600}
+          footer={[
+            <Button key="back" onClick={() => setIsAntModalOpen(false)}>
+              Cancel
+            </Button>,
+            <Button key="submit" type="primary" onClick={() => setIsAntModalOpen(false)}>
+              Submit
+            </Button>,
+          ]}
+        >
+          <div className="py-4">
+            <Title level={4}>Modal Content</Title>
+            <Paragraph>
+              This is an example of the Ant Design Modal component with custom styling and features.
+              It includes proper accessibility, keyboard navigation, and responsive design.
+            </Paragraph>
+            <Space direction="vertical" className="w-full">
+              <Input placeholder="Enter your name" />
+              <Input.TextArea placeholder="Enter description" rows={4} />
+              <Select placeholder="Select an option" className="w-full">
+                <Option value="option1">Option 1</Option>
+                <Option value="option2">Option 2</Option>
+                <Option value="option3">Option 3</Option>
+              </Select>
+            </Space>
+          </div>
+        </Modal>
+
+        {/* Custom Modal */}
+        {isClient && isCustomModalOpen && (
+          <div className="modal-overlay active" onClick={handleOverlayClick}>
+            <div className="modal">
+              <div className="modal-header">
+                <div className="modal-title">
+                  <div className="modal-icon">A</div>
+                  <div>
+                    <h2 className="modal-section-title">ADVANCED COMPONENTS</h2>
+                    <p className="modal-section-subtitle">Custom Modal Example</p>
+                  </div>
+                </div>
+                <button className="modal-close" onClick={closeCustomModal}>
+                </button>
+              </div>
+              
+              <div className="modal-body-scrollable">
+                <div className="modal-body">
+                  <h3 className="section-title">CONTENT SECTIONS</h3>
+                  <div className="columns-container">
+                    <div className="column">
+                      <div className="column-header">
+                        <span>Features & Benefits</span>
+                      </div>
+                      <div className="column-content">
+                        <div className="p-4">
+                          <Space direction="vertical" className="w-full">
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <Text>Responsive Design</Text>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                              <Text>Custom Styling</Text>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                              <Text>Scrollable Content</Text>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                              <Text>Professional Layout</Text>
+                            </div>
+                          </Space>
+                        </div>
+                      </div>
+                      <div className="column-content">
+                        <div className="p-4">
+                          <Space direction="vertical" className="w-full">
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                              <Text>Responsive Design</Text>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                              <Text>Custom Styling</Text>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                              <Text>Scrollable Content</Text>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                              <Text>Professional Layout</Text>
+                            </div>
+                          </Space>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="column">
+                      <div className="column-header">
+                        <span>Configuration Options</span>
+                      </div>
+                      <div className="column-content">
+                        <div className="p-4">
+                          <Space direction="vertical" className="w-full">
+                            <div>
+                              <Text strong>Modal Size:</Text>
+                              <div className="mt-2">
+                                <Slider defaultValue={75} marks={{ 0: 'Small', 50: 'Medium', 100: 'Large' }} />
+                              </div>
+                            </div>
+                            <div>
+                              <Text strong>Animation:</Text>
+                              <div className="mt-2">
+                                <Switch defaultChecked /> <Text className="ml-2">Enable transitions</Text>
+                              </div>
+                            </div>
+                            <div>
+                              <Text strong>Backdrop:</Text>
+                              <div className="mt-2">
+                                <Switch defaultChecked /> <Text className="ml-2">Close on click outside</Text>
+                              </div>
+                            </div>
+                          </Space>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="column">
+                      <div className="column-header">
+                        <span>Configuration Options</span>
+                      </div>
+                      <div className="column-content">
+                        <div className="p-4">
+                          <Space direction="vertical" className="w-full">
+                            <div>
+                              <Text strong>Modal Size:</Text>
+                              <div className="mt-2">
+                                <Slider defaultValue={75} marks={{ 0: 'Small', 50: 'Medium', 100: 'Large' }} />
+                              </div>
+                            </div>
+                            <div>
+                              <Text strong>Animation:</Text>
+                              <div className="mt-2">
+                                <Switch defaultChecked /> <Text className="ml-2">Enable transitions</Text>
+                              </div>
+                            </div>
+                            <div>
+                              <Text strong>Backdrop:</Text>
+                              <div className="mt-2">
+                                <Switch defaultChecked /> <Text className="ml-2">Close on click outside</Text>
+                              </div>
+                            </div>
+                          </Space>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="modal-footer">
+                <div className="footer-left">
+                  <h4 className="footer-title">ACTIONS</h4>
+                  <p className="footer-subtitle">Choose your action</p>
+                </div>
+                <div className="footer-buttons">
+                  <button className="btn btn-cancel" onClick={closeCustomModal}>Cancel</button>
+                  <button className="btn btn-add" onClick={closeCustomModal}>Apply Settings</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
