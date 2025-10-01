@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # ATradezone™ Cloud - Figma to Next.js Template
+=======
+# ATradezone™ Cloud UI - Figma to Next.js Template
+>>>>>>> 2f1e5fa1e93b228d0af3a091b2689d83445920e5
 
 A modern, responsive frontend template built with Next.js 15, Ant Design, and Tailwind CSS. Perfect for converting your Figma designs into production-ready React applications.
 
