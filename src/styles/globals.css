@@ -52,7 +52,8 @@ html {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Afacad', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  margin: 0;
 }
 
 @layer utilities {
@@ -126,7 +127,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #ECEFF1;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 
 .modal-overlay {
@@ -169,9 +170,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #E2E8F0; 
+  border-bottom: 1px solid #e1e1e1;
   border-radius:10px 10px 0px 0px;
-  box-shadow: 0 4px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 10px -5px #e1e1e1; 
 }
 
 .modal-title {
@@ -413,4 +414,71 @@ body {
 /* Ant Design Modal Wrap Background Override */
 .ant-modal-wrap {
   background: linear-gradient(180deg, #00000052 0%, #01353C 150%) !important;
+}
+
+/* Custom styles for Login Page */
+.ant-form-item-label > label {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.ant-input {
+  border-radius: 0.5rem;
+  height: 2rem;
+}
+
+.ant-input-affix-wrapper {
+  border-radius: 0.5rem;
+  height: 3rem;
+}
+
+.ant-btn {
+  border-radius: 0.5rem;
+  height: 3rem;
+  font-weight: 600;
+}
+
+/* Custom text size for heading */
+.text-4xl {
+  font-size: 5.25rem;
+}
+
+/* Remove default margin from form items */
+.ant-form-item {
+  @apply mb-6;
+}
+
+/* Add some decorative elements */
+.bg-decorative {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.bg-decorative::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  width: 200px;
+  height: 200px;
+  background: rgba(107, 242, 159, 0.2);
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+
+.bg-decorative::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+  width: 150px;
+  height: 150px;
+  background: rgba(107, 242, 159, 0.1);
+  border-radius: 50%;
+  transform: rotate(-30deg);
 }
