@@ -7,9 +7,24 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '475px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
       fontFamily: {
         'sans': ['Afacad', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
         'afacad': ['Afacad', 'sans-serif'],
+      },
+      fontSize: {
+        'xl': ['1.35rem', '1.75rem'],
+        '4xl': ['7.25rem', '6.5rem'],
+      },
+      lineHeight: {
+        'tight': '1.0',
       },
       colors: {
         background: "var(--background)",

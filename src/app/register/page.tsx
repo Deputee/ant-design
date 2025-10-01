@@ -1,10 +1,10 @@
 'use client';
 
 import { Form, Input, Button, Checkbox } from 'antd';
-import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 
-export default function Login() {
+export default function Register() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   
@@ -13,9 +13,9 @@ export default function Login() {
     try {
       console.log('Received values of form: ', values);
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // Handle login logic here
+      // Handle registration logic here
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Registration error:', error);
     } finally {
       setLoading(false);
     }
@@ -65,7 +65,7 @@ export default function Login() {
         </div>
       </div>
       
-      {/* Right Side - Clean Login Form */}
+      {/* Right Side - Clean Registration Form */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-16 bg-white min-h-screen lg:min-h-0">
         <div className="w-full max-w-sm mx-auto">
           {/* Mobile Logo */}
@@ -78,8 +78,8 @@ export default function Login() {
           </div>
           
           <div className="mb-6 sm:mb-8">
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Sign In</h1>
-            <p className="text-sm sm:text-base text-gray-600" style={{ color: '#6E82A5' }}>Welcome back!<br />Please enter your details</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Sign Up</h1>
+            <p className="text-sm sm:text-base text-gray-600" style={{ color: '#6E82A5' }}>Join us today!<br />Please fill in your details</p>
           </div>
           
           <div 
@@ -90,14 +90,31 @@ export default function Login() {
           >
             <Form
               form={form}
-              name="login"
+              name="register"
               onFinish={onFinish}
               layout="vertical"
               className="space-y-4"
             >
             <Form.Item
+              name="fullName"
+              label={<span className="text-gray-700 font-semibold text-sm sm:text-base">Business Name</span>}
+              rules={[
+                { required: true, message: 'Please enter your business name' },
+                { min: 2, message: 'Name must be at least 2 characters' },
+              ]}
+            >
+              <Input 
+                prefix={<UserOutlined className="text-gray-400 text-sm sm:text-base" style={{ fontSize: '14px' }} />} 
+                placeholder="Enter your full name" 
+                className="h-10 sm:h-12 rounded-lg text-sm sm:text-base"
+                size="large"
+                style={{ paddingLeft: '12px' }}
+              />
+            </Form.Item>
+
+            <Form.Item
               name="email"
-              label={<span className="text-gray-700 font-semibold text-sm sm:text-base">Email</span>}
+              label={<span className="text-gray-700 font-semibold text-sm sm:text-base">Email Address</span>}
               rules={[
                 { required: true, message: 'Please enter your email' },
                 { type: 'email', message: 'Please enter a valid email' },
@@ -115,7 +132,10 @@ export default function Login() {
             <Form.Item
               name="password"
               label={<span className="text-gray-700 font-semibold text-sm sm:text-base">Password</span>}
-              rules={[{ required: true, message: 'Please enter your password' }]}
+              rules={[
+                { required: true, message: 'Please enter your password' },
+                { min: 8, message: 'Password must be at least 8 characters' },
+              ]}
             >
               <Input.Password 
                 prefix={<LockOutlined className="text-gray-400 text-sm sm:text-base" style={{ fontSize: '14px' }} />} 
@@ -125,14 +145,52 @@ export default function Login() {
                 style={{ paddingLeft: '12px' }}
               />
             </Form.Item>
+
+            <Form.Item
+              name="confirmPassword"
+              label={<span className="text-gray-700 font-semibold text-sm sm:text-base">Confirm Password</span>}
+              dependencies={['password']}
+              rules={[
+                { required: true, message: 'Please confirm your password' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('Passwords do not match!'));
+                  },
+                }),
+              ]}
+            >
+              <Input.Password 
+                prefix={<LockOutlined className="text-gray-400 text-sm sm:text-base" style={{ fontSize: '14px' }} />} 
+                placeholder="Confirm your password"
+                className="h-10 sm:h-12 rounded-lg text-sm sm:text-base"
+                size="large"
+                style={{ paddingLeft: '12px' }}
+              />
+            </Form.Item>
             
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-0">
-              <Form.Item name="remember" valuePropName="checked" className="!mb-0">
-                <Checkbox className="text-xs sm:text-sm">Remember me</Checkbox>
+            <div className="mb-4 sm:mb-6">
+              <Form.Item 
+                name="agreement" 
+                valuePropName="checked" 
+                className="!mb-0"
+                rules={[
+                  { required: true, message: 'Please accept the terms and conditions' },
+                ]}
+              >
+                <Checkbox className="text-xs sm:text-sm">
+                  I agree to the{' '}
+                  <a href="#" className="text-emerald-600 hover:text-emerald-700 underline">
+                    Terms of Service
+                  </a>
+                  {' '}and{' '}
+                  <a href="#" className="text-emerald-600 hover:text-emerald-700 underline">
+                    Privacy Policy
+                  </a>
+                </Checkbox>
               </Form.Item>
-              <a href="/reset-password" className="text-emerald-600 hover:text-emerald-700 text-xs sm:text-sm font-medium">
-                Forgot password?
-              </a>
             </div>
             
             <Form.Item>
@@ -143,19 +201,10 @@ export default function Login() {
                 className="w-full h-10 sm:h-12 bg-emerald-600 hover:bg-emerald-700 border-none text-sm sm:text-base font-semibold"
                 size="large"
               >
-                {loading ? 'Signing in...' : 'Sign in'}
+                {loading ? 'Creating Account...' : 'Create Account'}
               </Button>
             </Form.Item>
             </Form>
-          </div>
-          
-          <div className="mt-4 sm:mt-6 text-center">
-            <p className="text-xs sm:text-sm text-gray-600">
-              Don't have an account?{' '}
-              <a href="/register" className="text-emerald-600 hover:text-[#29DB5C] font-medium transition-colors">
-                Create account
-              </a>
-            </p>
           </div>
           
           <div className="mt-4 sm:mt-6">
@@ -193,16 +242,11 @@ export default function Login() {
             </div>
           </div>
           
-          {/* legal - Separate at very bottom */}
-          <div className="mt-8 pt-4 text-center">
-            <p className="text-xs text-gray-400">
-              By signing in, you agree to our{' '}
-              <a href="#" className="text-emerald-600 hover:text-[#29DB5C] underline transition-colors">
-                Terms of Service
-              </a>
-              {' '}and{' '}
-              <a href="#" className="text-emerald-600 hover:text-[#29DB5C] underline transition-colors">
-                Privacy Policy
+          <div className="mt-4 sm:mt-6 text-center">
+            <p className="text-xs sm:text-sm text-gray-600">
+              Already have an account?{' '}
+              <a href="/login" className="text-emerald-600 hover:text-[#29DB5C] font-medium transition-colors">
+                Sign in
               </a>
             </p>
           </div>

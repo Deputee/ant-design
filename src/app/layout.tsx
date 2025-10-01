@@ -4,8 +4,8 @@ import { ConfigProvider } from 'antd';
 import '../styles/globals.css';
 
 export const metadata = {
-  title: 'Cloud Enterprise Management',
-  description: 'Login to access your enterprise management dashboard',
+  title: 'ATradezone™ Cloud - Sign In',
+  description: 'Sign in to access your enterprise management dashboard',
 }
 
 export default function RootLayout({
